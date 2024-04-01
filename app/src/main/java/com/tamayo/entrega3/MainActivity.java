@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     ListView listaPersona;
+    HashMap<String, Integer> visitCountMap = new HashMap<>(); // Contador de visitas
+    String selectedItemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
                 "La canción más escuchada de Ysy A es: Flechazo en el centro con 60,548,881 de reproduciones",
         };
         String[] telefonos = {
-                "13.4 millones de seguidores",
-                "8.9 millones de seguidores",
-                "6.7 millones de seguidores",
-                "7.2 millones de seguidores",
-                "3.1 millones de seguidores",
+                "13.4 M",
+                "8.9 M",
+                "6.7 M",
+                "7.2 M",
+                "3.1 M",
         };
 
         ListAdapter personas = new ListAdapter(MainActivity.this,nombres,telefonos,fotoPerfil,biografias);
@@ -53,6 +57,17 @@ public class MainActivity extends AppCompatActivity {
         listaPersona.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> Lista, View Vista, int Posicion, long Id){
+
+                // Guarda el ID del ítem seleccionado
+                selectedItemID = nombres[Posicion];
+
+                if (selectedItemID != null) {
+                    int visitCount = visitCountMap.getOrDefault(selectedItemID, 0);
+                    visitCountMap.put(selectedItemID, visitCount + 1);
+                }
+
+                // Notifica al adaptador que los datos han cambiado
+                personas.notifyDataSetChanged();
 
                 Intent EnviarInfo = new Intent(MainActivity.this, UserActivity.class)
                         .putExtra("Nombre: ", nombres[Posicion])

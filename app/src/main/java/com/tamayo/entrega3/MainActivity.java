@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 "3.1 M",
         };
 
-        ListAdapter personas = new ListAdapter(MainActivity.this,nombres,telefonos,fotoPerfil,biografias);
+        ListAdapter personas = new ListAdapter(MainActivity.this,nombres,telefonos,fotoPerfil,biografias,visitCountMap);
         listaPersona = (ListView) findViewById(R.id.listaUsuario);
         listaPersona.setAdapter(personas);
 
